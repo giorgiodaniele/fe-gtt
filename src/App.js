@@ -76,7 +76,7 @@ function App() {
     e.preventDefault();
     if (!number) return;
 
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/api/lines/${number}`)
+    fetch(`/api/lines/${number}`)
       .then(res => res.json())
       .then(data => setVehicles(data))
       .catch(err => console.error(err));
@@ -87,13 +87,15 @@ function App() {
   // is selected
   useEffect(() => {
     if (!number) return;
+
     const interval = setInterval(() => {
-      fetch(`${process.env.REACT_APP_BACKEND_URL}/api/lines/${number}`)
+      fetch(`/api/lines/${number}`)
         .then(res => res.json())
         .then(data => setVehicles(data))
         .catch(err => console.error(err));
     }, 2000);
     return () => clearInterval(interval);
+
   }, [number]);
 
 
