@@ -1,0 +1,28 @@
+version: '3.9'
+
+networks:
+  gtt-network:
+    driver: bridge
+
+services:
+  be-gtt:
+    image: giorgiodaniele/be-gtt:1.0
+    container_name: be-gtt
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    networks:
+      - gtt-network
+
+  fe-gtt:
+    image: giorgiodaniele/fe-gtt:1.0
+    container_name: fe-gtt
+    ports:
+      - "3000:80"
+    environment:
+      - REACT_APP_BACKEND_URL=/api
+    depends_on:
+      - be-gtt
+    restart: unless-stopped
+    networks:
+      - gtt-network
